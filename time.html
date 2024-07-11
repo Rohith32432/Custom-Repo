@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="template">
+
+        <div class="number-slot" id="numberSlot">
+            <div class="number">
+    
+                <div class="hr-tendigit">0</div>
+                <div class="hr-onedigit">0</div>
+                <div>:</div>
+                <div class="min-tendigit">0</div>
+                <div class="min-onedigit">0</div>
+                <div>:</div>
+                <div class="sec-tendigit">0</div>
+                <div class="sec-onedigit ">0</div>
+            </div>
+        </div>
+        <div class="bookmarks">
+            <div class="marker">
+                <img src="" alt="">
+                <span>name</span>
+            </div>
+        </div>
+    </div>
+    <button onclick=showmenu()>menu</button>
+  
+    <style>
+        .template .bookmarks .marker{
+            /* display: flex; */
+            background-color: rgb(67, 67, 67);
+            padding: 5px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            backdrop-filter: blur(5px);
+            width: 100px;
+            text-align: center;
+            /* height: max-content; */
+            height: 100px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+        .bookmarks .marker img{
+            flex: 1;
+            width: 100%;
+            border-radius: 20px;
+        }
+        body {
+            height: 100vh;
+            background-color: antiquewhite;
+            width: 100vw;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* background: rgb(0,0,0); */
+            background:  linear-gradient(90deg, rgba(0, 0, 0, 0.671) 40%, rgba(0, 0, 0, 0.11) 78%), url('../img4.jpg');
+            overflow: hidden;
+            /* background-image: url('https://cdna.artstation.com/p/assets/images/images/045/306/548/large/ashish-boyne-aswt-sketch-ashishboyne-v005.jpg?1642429486'); */
+            background-size: cover;
+            color: white;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .number div {
+            display: inline-block;
+            transition: .5s ease;
+        }
+
+        .number-slot {
+            /* border: 2px solid black; */
+            font-family: Arial, sans-serif;
+            font-size: 6.5rem;
+            color: rgb(255, 255, 255);
+       
+            font-weight: bolder;
+            overflow: hidden;
+            height: max-content;
+            text-align: center;
+            /* width: 10em; */
+        }
+
+        .number-slot .number {
+            position: relative;
+        }
+
+        @keyframes moveNumberOut {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(0%);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+        }
+
+        .out {
+            animation: moveNumberOut 1s infinite;
+        }
+    </style>
+    <script>
+
+
+
+
+        var numberSlot = document.querySelector('.number-slot');
+        var hrten = document.querySelector('.hr-tendigit');
+        var hrone = document.querySelector('.hr-onedigit');
+        var minten = document.querySelector('.min-tendigit');
+        var minone = document.querySelector('.min-onedigit');
+        var secten = document.querySelector('.sec-tendigit');
+        var secone = document.querySelector('.sec-onedigit');
+
+        const date = new Date();
+        let hr = date.getHours();
+        let min = date.getMinutes();
+        let sec = date.getSeconds();
+        // let hr = 10;
+        // let min = 59;
+        // let sec = 55;
+
+        setInterval(() => {
+            sec++;
+            if (sec === 60) {
+                sec = 0;
+                min++;
+            }
+            if (min === 60) {
+                min = 0;
+                hr++;
+            }
+            if (hr === 24) {
+                hr = 0;
+            }
+
+            let hrStr = hr < 10 ? '0' + hr : hr.toString();
+            let minStr = min < 10 ? '0' + min : min.toString();
+            let secStr = sec < 10 ? '0' + sec : sec.toString();
+            secone.classList.add('out')
+            let secflag = parseInt(secStr.charAt(1))
+            secten.textContent = secStr.charAt(0)
+            secone.textContent = secStr.charAt(1)
+
+            minten.textContent = minStr.charAt(0)
+            minone.textContent = minStr.charAt(1)
+
+            hrten.textContent = hrStr.charAt(0)
+            hrone.textContent = hrStr.charAt(1)
+
+            if (secflag == 0) {
+                secten.classList.add('out')
+            }
+            else secten.classList.remove('out')
+            // console.log(min);
+            let minflag = parseInt(minStr.charAt(1))
+
+            sec == 0 ? minone.classList.add('out') : minone.classList.remove('out')
+            min % 10 == 0 && sec == 0 ? minten.classList.add('out') : minten.classList.remove('out')
+            min == 0 && sec == 0 ? hrone.classList.add('out') : hrone.classList.remove('out')
+
+        }, 1000);
+    </script>
+
+<script>
+    var arr=[...JSON.parse(localStorage.getItem('arr'))]
+    var bookmarks=document.querySelectorAll('.bookmarks')
+
+    if(bookmarks.length==1){
+        const newarr=JSON.parse(localStorage.getItem('arr'))
+
+        newarr.map((e)=>{
+
+            const newdiv=  document.createElement('div')
+        newdiv.className='marker'
+        newdiv.innerHTML=`
+        <a href=${e.url}>
+        <img src=https://www.google.com/s2/favicons?domain=${e.url}&sz=256 alt="">
+                    <span>${e.name}</span></a>`
+                   
+        bookmarks.forEach((bookmark)=>{
+            bookmark.append(newdiv)
+        })
+        })
+    }
+    // var active=document.querySelector('.model')
+    console.log(bookmarks);
+  
+    function addbookmark(name,url){
+        arr.push({name:name,url:url})
+       
+            localStorage.setItem('arr',JSON.stringify(arr))
+        
+        const newdiv=  document.createElement('div')
+    newdiv.className='marker'
+    newdiv.innerHTML=`
+    <a href=${url}>
+    <img src=https://www.google.com/s2/favicons?domain=${url}&sz=256 alt="">
+                <span>${name}</span></a>`
+               
+    bookmarks.forEach((bookmark)=>{
+        bookmark.append(newdiv)
+    })
+    }
+   document.body.addEventListener('click', (e) => {
+        const model=document.querySelector('.model')
+        if(e.target.className==='model'){
+            document.body.removeChild(model);
+        }
+    
+});
+   function showmenu(){
+   const body=document.body
+ 
+   const form=document.createElement('div')
+   form.className='model'
+   form.innerHTML=`  
+   <div class='inside'>
+   <form action="#">
+        <input type="text" id='x1'><input type="text" id=x2>
+        <button id="submit" onclick=sample()> submit</button>
+    </form></div>
+`
+body.append(form)
+    
+   }
+   function sample(){
+    const name=document.getElementById('x1')
+    const url=document.getElementById('x2')
+    addbookmark(name.value,url.value)
+    // const model=document.querySelector('.model')
+    //     document.body.removeChild(model)
+
+   }
+</script>
+</body>
+
+</html>
