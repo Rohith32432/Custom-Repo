@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
 </head>
 
 <body>
@@ -25,94 +28,12 @@
             </div>
         </div>
         <div class="bookmarks">
-            <div class="marker">
-                <img src="" alt="">
-                <span>name</span>
-            </div>
+            <button onclick=showmenu()><i class='bx bx-plus'></i></button>
+          
         </div>
     </div>
-    <button onclick=showmenu()>menu</button>
   
-    <style>
-        .template .bookmarks .marker{
-            /* display: flex; */
-            background-color: rgb(67, 67, 67);
-            padding: 5px;
-            box-sizing: border-box;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            backdrop-filter: blur(5px);
-            width: 100px;
-            text-align: center;
-            /* height: max-content; */
-            height: 100px;
-            cursor: pointer;
-            border-radius: 20px;
-        }
-        .bookmarks .marker img{
-            flex: 1;
-            width: 100%;
-            border-radius: 20px;
-        }
-        body {
-            height: 100vh;
-            background-color: antiquewhite;
-            width: 100vw;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* background: rgb(0,0,0); */
-            background:  linear-gradient(90deg, rgba(0, 0, 0, 0.671) 40%, rgba(0, 0, 0, 0.11) 78%), url('../img4.jpg');
-            overflow: hidden;
-            /* background-image: url('https://cdna.artstation.com/p/assets/images/images/045/306/548/large/ashish-boyne-aswt-sketch-ashishboyne-v005.jpg?1642429486'); */
-            background-size: cover;
-            color: white;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
 
-        .number div {
-            display: inline-block;
-            transition: .5s ease;
-        }
-
-        .number-slot {
-            /* border: 2px solid black; */
-            font-family: Arial, sans-serif;
-            font-size: 6.5rem;
-            color: rgb(255, 255, 255);
-       
-            font-weight: bolder;
-            overflow: hidden;
-            height: max-content;
-            text-align: center;
-            /* width: 10em; */
-        }
-
-        .number-slot .number {
-            position: relative;
-        }
-
-        @keyframes moveNumberOut {
-            0% {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-
-            50% {
-                transform: translateY(0%);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-        }
-
-        .out {
-            animation: moveNumberOut 1s infinite;
-        }
-    </style>
     <script>
 
 
@@ -125,7 +46,7 @@
         var minone = document.querySelector('.min-onedigit');
         var secten = document.querySelector('.sec-tendigit');
         var secone = document.querySelector('.sec-onedigit');
-
+        
         const date = new Date();
         let hr = date.getHours();
         let min = date.getMinutes();
@@ -177,11 +98,11 @@
     </script>
 
 <script>
-    var arr=[...JSON.parse(localStorage.getItem('arr'))]
+    var arr=[] ||[...JSON.parse(localStorage.getItem('arr'))]
     var bookmarks=document.querySelectorAll('.bookmarks')
 
     if(bookmarks.length==1){
-        const newarr=JSON.parse(localStorage.getItem('arr'))
+        const newarr= JSON.parse(localStorage.getItem('arr')) || []
 
         newarr.map((e)=>{
 
@@ -190,7 +111,7 @@
         newdiv.innerHTML=`
         <a href=${e.url}>
         <img src=https://www.google.com/s2/favicons?domain=${e.url}&sz=256 alt="">
-                    <span>${e.name}</span></a>`
+                    </a><h5>${e.name}</h5>`
                    
         bookmarks.forEach((bookmark)=>{
             bookmark.append(newdiv)
